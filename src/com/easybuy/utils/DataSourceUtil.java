@@ -49,8 +49,17 @@ public class DataSourceUtil {
         }
         return  connection;
     }
+    public static void closeConnection(Connection connection){
+        if (connection != null){
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     //关闭链接
-    public static void closeConnection(ResultSet resultSet,PreparedStatement preparedStatement,Connection connection){
+    public static void closeAll(ResultSet resultSet,PreparedStatement preparedStatement,Connection connection){
         try {
             if (resultSet != null && !resultSet.isClosed()){
                 resultSet.close();

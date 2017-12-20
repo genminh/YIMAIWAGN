@@ -25,9 +25,13 @@ function ShowDiv_1(show_div,bg_div){
 	// bgdiv.style.height = $(document).height();
 	$("#"+bg_div).height($(document).height());
 };
-//¹Ø±Õµ¯³ö²ã
 function CloseDiv_1(show_div,bg_div)
 {
 	document.getElementById(show_div).style.display='none';
 	document.getElementById(bg_div).style.display='none';
+};
+/*æ˜¾ç¤ºå¼¹å‡ºçš„æ¡†*/
+function showMessage(content){
+    jQuery("#showMessage").text(content);
+    ShowDiv_1('MyDiv1','fade1');
 };

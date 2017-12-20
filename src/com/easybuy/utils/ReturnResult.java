@@ -58,7 +58,7 @@ public class ReturnResult  implements Serializable {
      */
     public ReturnResult returnFail(String message){
         this.status = Constants.ReturnResult.FAIL;
-        this.data = message;
+        this.message = message;
         return this;
     }
 

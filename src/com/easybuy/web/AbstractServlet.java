@@ -3,6 +3,7 @@ package com.easybuy.web;
 import com.alibaba.fastjson.JSONObject;
 import com.easybuy.utils.EmptyUtils;
 import com.easybuy.utils.ReturnResult;
+import com.sun.org.apache.regexp.internal.RE;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,20 +21,21 @@ public abstract class AbstractServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //action对请求进行处理的servlet的方法名称
         String actiom = request.getParameter("action");
+        System.out.println("action --------------------------------");
         Method method = null;
         Object result = null;
         if (EmptyUtils.isEmpty(actiom)){
             //为空的时候跳转回首页
             //如果没有拿到方法的名字，就直接返回首页
             request.getRequestDispatcher("/show/index.jsp").forward(request,response);
-            //result = execute();
+            //result = execute(request,response);
         }else {
             //获取class实例
             try {
                 //利用反射来获取servlet对应的方法名称
-                method = getServletClass().getDeclaredMethod(actiom,HttpServletRequest.class,HttpServletResponse.class);
-                result = method.invoke(this,request,response);
-                //System.out.println(result);
+                    method = getServletClass().getDeclaredMethod(actiom,HttpServletRequest.class,HttpServletResponse.class);
+                    result = method.invoke(this,request,response);
+                System.err.println(result);
                 //对结果进行处理
                 toView(request,response,result);
             } catch (NoSuchMethodException e) {
@@ -51,6 +53,7 @@ public abstract class AbstractServlet extends HttpServlet {
                         //服务器向客户端发送
                         ReturnResult returnResult = new ReturnResult();
                         returnResult.returnFail("系统错误");
+                        write(returnResult, response);
                     }
                 }else{
                     //如果为空的情况下
@@ -78,6 +81,7 @@ public abstract class AbstractServlet extends HttpServlet {
             if (result instanceof  String){
                 //如果返回结果为String就进行页面跳转；
                 String viewName = result.toString() +".jsp";
+                System.out.println(viewName);
                 request.getRequestDispatcher(viewName).forward(request,response);
                 //如果请求时只是需要一个数据的时候
             }else {
@@ -100,6 +104,7 @@ public abstract class AbstractServlet extends HttpServlet {
             try {
                 writer = response.getWriter();
                 writer.print(json);
+                System.out.println(json);
                 writer.flush();
             } catch (IOException e) {
                 e.printStackTrace();

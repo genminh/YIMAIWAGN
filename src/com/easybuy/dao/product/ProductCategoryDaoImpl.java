@@ -2,10 +2,8 @@ package com.easybuy.dao.product;
 
 import com.easybuy.dao.BaseDaoImpl;
 import com.easybuy.entity.ProductCategory;
-import com.easybuy.utils.DataSourceUtil;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,11 +18,17 @@ public class ProductCategoryDaoImpl extends BaseDaoImpl implements ProductCatego
         ProductCategory pc = new ProductCategory();
         pc.setId(resultSet.getInt("id"));
         pc.setName(resultSet.getString("name"));
-        pc.setId(resultSet.getInt("parentId"));
+        pc.setParentId(resultSet.getInt("parentId"));
         pc.setType(resultSet.getInt("type"));
         pc.setIconClass(resultSet.getString("iconClass"));
         return pc;
     }
+
+    /**
+     * 数据查询
+     * @param parentId
+     * @return
+     */
     @Override
     public List<ProductCategory> querAllProductCategories(String parentId) {
         List<ProductCategory> pcList = new ArrayList<>();

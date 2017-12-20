@@ -1,5 +1,9 @@
 package com.easybuy.entity;
 import java.io.Serializable;
+
+/**
+ * 产品种类
+ */
 public class ProductCategory implements Serializable{
 
 	private Integer id;//ID
